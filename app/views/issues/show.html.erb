@@ -1,0 +1,49 @@
+
+<%= link_to "Back", root_path %>
+<%= link_to "Report", () %>
+
+<h1><%= @issue.classification.capitalize%></h1>
+<p>
+  <strong>Title:</strong>
+  <%= @issue.title.capitalize %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @issue.content.capitalize %>
+</p>
+
+<p>
+  <strong>Receipt:</strong>
+  <%= @issue.receipt %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @issue.user.firstname.capitalize %>
+</p>
+
+<h3><%= @issue.id %></h3>
+
+<% if @issue.user_id == current_user.id %>
+<%= link_to "Delete Issue", issue_path(:id => @issue.id), method: :delete, data: { confirm: 'All associated comments will also be deleted, are you sure?' } %>
+<% else %>
+<% end%>
+<%= render "comments/form", comment: @comment %>
+
+<table>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.user.firstname %></td>
+        <td><%= comment.content %></td>
+        <td><%= comment.issue_id %></td>
+        <td><%= comment.id%></td>
+        <% if comment.user_id == current_user.id %>
+        <td><%= link_to 'Delete comment', issue_comment_path(:issue_id=>comment.issue_id, :id=>comment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
