@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+<%= link_to 'Back', root_path %>
+<% if @notice.user_id == current_user.id %>
+<% else %>
+<%= link_to "Report", () %>
+<% end %>
+<h1><%= @notice.classification.capitalize %></h1>
+<p>
+  <strong>Title:</strong>
+  <%= @notice.title.capitalize %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @notice.content.capitalize %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @notice.user.firstname.capitalize %>
+</p>
+
+
+<% if @notice.user_id == current_user.id %>
+<%= link_to 'Edit', edit_notice_path(@notice) %>
+<% else %>
+<% end%>
