@@ -1,7 +1,11 @@
-<h1>Rhodes</h1>
-<p>Community Board</p>
+<div class="container vertical-center">
+<h1><%=current_user.location %></h1>
+<h2>Community Board</h2>
 <h3>New Notice</h3>
-<%= link_to 'Back', root_path %>
+<%= link_to root_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-chevron-left"></span>
+<% end %><br><br>
 <%= link_to "Issue", new_issue_path %>
 
 <%= render 'form', notice: @notice %>
+</div>

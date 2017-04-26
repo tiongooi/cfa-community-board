@@ -1,0 +1,16 @@
+
+<div class="container vertical-center">
+<h3>Which suburb do you live in?</h3>
+
+
+
+<% @data.each do |suburb| %>
+<%= form_for :postcode, url: "users/add_postcode" do |f| %>
+<%= f.label "#{suburb["location"]}, #{suburb["state"]} #{suburb["postcode"]}"%>
+<%= f.hidden_field :location, :value => suburb["location"] %>
+<%= f.hidden_field :state, :value => suburb["state"] %>
+<%= f.hidden_field :postcode, :value => suburb["postcode"] %>
+<%= f.submit "Select location" %>
+<% end %>
+<% end %>
+</div>

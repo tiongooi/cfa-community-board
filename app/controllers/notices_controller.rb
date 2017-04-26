@@ -4,7 +4,7 @@ class NoticesController < ApplicationController
   # GET /notices
   # GET /notices.json
   def index
-    @notices = Notice.all
+    @notices = Notice.where(["location = ?", "current_user.location"])
   end
 
   # GET /notices/1
@@ -28,6 +28,7 @@ class NoticesController < ApplicationController
     @notice = Notice.new(notice_params)
     @notice.user_id = current_user.id
     @notice.postcode = current_user.postcode
+    @notice.location = current_user.location
     @notice.classification = "notice"
 
     respond_to do |format|
@@ -73,6 +74,6 @@ class NoticesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def notice_params
-      params.require(:notice).permit(:user_id, :title, :content)
+      params.require(:notice).permit(:user_id, :title, :content, :image)
     end
 end

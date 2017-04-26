@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.where(["location = ?", "current_user.location"])
   end
 
   # GET /issues/1
@@ -32,6 +32,7 @@ class IssuesController < ApplicationController
     @issue.user_id = current_user.id
     @issue.postcode = current_user.postcode
     @issue.receipt = generate_random
+    @issue.location = current_user.location
     @issue.classification = "issue"
 
     respond_to do |format|
@@ -77,7 +78,7 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      params.require(:issue).permit(:user_id, :title, :content, :receipt)
+      params.require(:issue).permit(:user_id, :title, :content, :receipt, :image)
     end
 
     def generate_random
