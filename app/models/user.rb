@@ -7,5 +7,7 @@ class User < ApplicationRecord
          has_many :notices
          has_many :issues
 
+         mount_uploader :avatar, AvatarUploader
+
         #  attr_accessor :firstname :lastname :postcode :mobilenumber
 end

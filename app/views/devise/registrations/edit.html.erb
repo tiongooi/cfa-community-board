@@ -1,63 +1,94 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container vertical-center">
+<% if Time.now - current_user.created_at < 1.minute %>
+<h3>Welcome to town <%= current_user.firstname %>!</h3>
+<h6>Add an avatar, it'll be awesome!</h6>
+<% else %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= link_to root_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-chevron-left"></span>
+<% end %>
+
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<% end %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { :method=>:put, :multipart=>true }) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label "First name" %><br />
-    <%= f.text_field :firstname, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label "Last name" %><br />
-    <%= f.text_field :lastname, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label "Mobile number" %><br />
-    <%= f.telephone_field :mobilenumber, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :postcode %><br />
-    <%= f.number_field :postcode, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+    <% if @user.avatar.file.nil? %>
+    <%= image_tag(@user.avatar_url) %>
+    <% else %>
+    <%= image_tag(@user.avatar_url(:thumb)) %>
+    <%= f.check_box :remove_avatar %>
+    Remove avatar
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar, autofocus: true %>
+    <%= f.hidden_field :avatar_cache %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
+    <%= f.label "First name" %><br />
+    <%= f.text_field :firstname %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div class="field">
+    <%= f.label "Last name" %><br />
+    <%= f.text_field :lastname %>
   </div>
+
+  <div class="field">
+    <%= f.label "Mobile number" %><br />
+    <%= f.telephone_field :mobilenumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :postcode %><br />
+    <%= f.number_field :postcode %>
+  </div>
+
+  <% if Time.now - current_user.created_at < 1.minute %>
+  <div class="actions">
+    <%= f.submit "Good to go" %>
+  </div>
+  <% else %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, autocomplete: "off" %>
+            <% if @minimum_password_length %>
+              <br />
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "off" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Update" %>
+          </div>
+    <% end %>
 <% end %>
 
+<% if Time.now - current_user.created_at < 1.minute %>
+<% else %>
 <h3>Cancel my account</h3>
 
 <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
 <%= link_to "Back", :back %>
+<% end %>
+</div>

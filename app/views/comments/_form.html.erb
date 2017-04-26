@@ -1,3 +1,4 @@
+<div class="container vertival-center">
 <%= form_for([@issue,comment]) do |f| %>
   <% if comment.errors.any? %>
     <div id="error_explanation">
@@ -12,7 +13,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label "Write comment" %>
+    <%= f.label "Comment" %>
     <%= f.text_area :content %>
   </div>
 
@@ -20,3 +21,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>

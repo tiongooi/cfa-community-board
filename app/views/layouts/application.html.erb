@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CommunityBoard</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
     <%= render 'partials/nav' %>
+    <div class="container vertival-center">
     <% if flash[:notice] %>
       <div><%= flash[:notice] %></div>
     <% end %>
+  </div>
     <%= yield %>
   </body>
 </html>

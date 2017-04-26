@@ -1,13 +1,18 @@
+<div class="container vertical-center">
 <p id="notice"><%= notice %></p>
-<%= link_to 'Back', root_path %>
-<% if @notice.user_id == current_user.id %>
-<% else %>
-<%= link_to "Report", () %>
+<%= link_to root_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-chevron-left"></span>
 <% end %>
+
 <h1><%= @notice.classification.capitalize %></h1>
+
 <p>
-  <strong>Title:</strong>
-  <%= @notice.title.capitalize %>
+  <strong><%= @notice.title.capitalize %></strong>
+</p>
+
+<p>
+  By:
+  <%= @notice.user.firstname.capitalize %>
 </p>
 
 <p>
@@ -15,13 +20,19 @@
   <%= @notice.content.capitalize %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @notice.user.firstname.capitalize %>
-</p>
+
+
+<% if @notice.image.file.nil? %>
+<% else %>
+<%= image_tag(@notice.image_url(:standard)) %>
+<% end %>
+
+
 
 
 <% if @notice.user_id == current_user.id %>
 <%= link_to 'Edit', edit_notice_path(@notice) %>
 <% else %>
 <% end%>
+
+</div>

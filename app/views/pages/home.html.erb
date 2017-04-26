@@ -1,20 +1,27 @@
-<h1>Rhodes</h1>
-<p>Community Board</p>
-<%= link_to "Post", new_notice_path %>
-<%= link_to "Sort", () %>
+<div class="container vertical-center">
+<h1><%=current_user.location %></h1>
+<h2>Community Board</h2>
 
-<table>
-  <tbody>
+
+<%= link_to new_notice_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-edit"></span>
+<% end %><br><br>
+
       <% @posts.each do |post| %>
-        <tr>
-          <td><%= post.title.capitalize %></td>
-          <td><%= post.user.firstname %></td>
+        <div class="panel panel-default">
+          <div class="panel-body">
+          <h3><%= post.title.capitalize %></h3>
+          <p><%= post.user.firstname %></p>
           <% if post.classification == "issue"%>
-          <td><%= link_to 'Show', issue_path(:id => post.id)%></td>
+            <td><%= link_to issue_path(:id => post.id), class: "btn btn-default" do %>
+                <span class="glyphicon glyphicon-eye-open"></span>
+            <% end %></td>
           <% else %>
-          <td><%= link_to 'Show', notice_path(:id => post.id) %></td>
+          <td><%= link_to notice_path(:id => post.id), class: "btn btn-default" do %>
+              <span class="glyphicon glyphicon-eye-open"></span>
+          <% end %></td>
           <% end %>
-        </tr>
+        </div>
+        </div>
       <% end %>
-    </tbody>
-</table>
+</div>
